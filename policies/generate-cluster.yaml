@@ -9,11 +9,8 @@ spec:
       resources:
         kinds:
         - KubeadmConfigTemplate
-    preconditions:
-      all:
-      - key: "{{ request.operation }}"
-        operator: Equals
-        value: CREATE
+        operations:
+        - CREATE
     context:
     - name: meta
       apiCall:
@@ -28,6 +25,7 @@ spec:
     - name: workerNodes
       variable:
         jmesPath: "meta.annotations.clusterWorkerNodes || `1`"
+    skipBackgroundRequests: false
     generate:
       apiVersion: cluster.x-k8s.io/v1beta1
       kind: Cluster
